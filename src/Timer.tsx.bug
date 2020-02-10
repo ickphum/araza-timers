@@ -1,0 +1,63 @@
+import React, { useState, useEffect } from "react";
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+
+
+interface TimerProps { 
+    label: string; 
+    periodInMilliseconds: number; 
+    index: number;
+    // times: number[];
+    // setTimes: Dispatch<SetStateAction<number[]>>;
+    setTime : (index: number, time: number) => void;
+}
+
+export const Timer = (props: TimerProps) => {
+
+    const [elapsedTime, setElapsedTime] = useState<number>(0);
+    const [timerRunning, setTimerRunning] = useState(false);
+
+    const updateTimer = () => {
+        console.log("updateTimer", props.index);
+        setElapsedTime( (oldTime: number) => {
+            props.setTime(props.index, oldTime + props.periodInMilliseconds);
+            return oldTime + props.periodInMilliseconds
+        });
+    }
+
+    const resetTimer = () => {
+        setElapsedTime(0);
+        props.setTime(props.index, 0);
+    }
+
+    const toggleTimer = () => {
+        setTimerRunning(! timerRunning);
+    }
+
+    useEffect(() => {
+
+        console.log("render times", props.index);
+
+        if (timerRunning) {
+            const intervalTimer = setInterval(updateTimer, props.periodInMilliseconds);
+
+            return () => clearInterval(intervalTimer);
+        }
+
+    });
+
+    return (<Box>
+        <div>
+            {props.label}
+        </div>
+        <div>
+            {elapsedTime}
+        </div>
+        <Button variant="contained" onClick={toggleTimer}>
+          {timerRunning ? "Pause" : "Play"}
+        </Button>
+        <Button variant="contained" onClick={resetTimer}>
+          Reset
+        </Button>
+    </Box>);
+}

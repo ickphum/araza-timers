@@ -1,0 +1,58 @@
+import React, { useState, useEffect } from "react";
+import Grid from '@material-ui/core/Grid';
+import { Timer } from "./Timer";
+
+interface TotalTimerProps { total: number; }
+
+export const TotalTimer = () => {
+
+    // const [times, setTimes] = useState([0,0,0]);
+    const [time0, setTime0 ] = useState(0);
+    const [time1, setTime1 ] = useState(0);
+    const [time2, setTime2 ] = useState(0);
+
+    useEffect(() => {
+        console.log("render TotalTimer");
+    })
+
+    const setTime = (index: number, time: number) => {
+        console.log("setTime in TotalTimer", index, time);
+        if (index === 0)
+            setTime0(time);
+        if (index === 1)
+            setTime1(time);
+        if (index === 2)
+            setTime2(time);
+    }
+
+    return (
+        <Grid container spacing={2}>
+            <Grid item xs={7}>
+                {time0} {time1} {time2}
+            </Grid>
+            <Grid item container xs={5} spacing={2}>
+                <Grid item xs={12}>
+                    <Timer label="Timer 1" 
+                        periodInMilliseconds={200} 
+                        index={0} 
+                        setTime={setTime}
+                        />
+                </Grid>
+                <Grid item xs={12}>
+                    <Timer label="Timer 2" 
+                        periodInMilliseconds={400} 
+                        index={1} 
+                        setTime={setTime}
+                        />
+                </Grid>
+                <Grid item xs={12}>
+                    <Timer label="Timer 3" 
+                        periodInMilliseconds={300} 
+                        index={2} 
+                        setTime={setTime}
+                        />
+                </Grid>
+            </Grid>
+        </Grid>
+    );
+}
