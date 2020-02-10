@@ -39,7 +39,7 @@ export const TotalTimer = () => {
 
     const [baseTime, setBaseTime ] = useState<number>(0);
     const [times, setTimes] = useState<number[]>([0,0,0]);
-    const [periods] = useState<number[]>([200,600,400]);
+    const [periods] = useState<number[]>([10000,1000,100]);
     const [runnings, setRunnings] = useState<boolean[]>([false, false, false]);
 
     const updateTimer = () => {
